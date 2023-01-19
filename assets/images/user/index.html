@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Slideshow</title>
+<style>
+  /* Style the image container */
+  #slideshow {
+    position: relative;
+    width: 100%;
+    height: 400px;
+  }
+
+  /* Style the images */
+  #slideshow img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+</head>
+<body>
+
+<h2>All .jpg images from folder:</h2>
+
+<div id="slideshow">
+  <!-- Images will be displayed here -->
+</div>
+
+<script>
+  // Get all the images from the folder
+  var image_folder = "assets/images/user/";
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', image_folder, true);
+  xhr.responseType = 'document';
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var images = xhr.responseXML.getElementsByTagName("a");
+      var img_array = [];
+      for (var i = 0; i < images.length; i++) {
+        var image = images[i].href;
+        if (image.endsWith(".jpg")) {
+          img_array.push(image_folder + image);
+        }
+      }
+      // Display the first image
+      var index = 0;
+      document.querySelector("#slideshow").innerHTML = "<img src='" + img_array[index] + "'>";
+
+      // Set interval for the slideshow
+      setInterval(function() {
+        index++;
+        if (index == img_array.length) {
+          index = 0;
+        }
+        document.querySelector("#slideshow img").src = img_array[index];
+      }, 3000); // 3000ms = 3s
+    } else {
+      console.log("Error getting images from folder");
+    }
+  };
+  xhr.send();
+</script>
+
+</body>
+</html>
