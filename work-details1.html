@@ -350,6 +350,7 @@
     <div class="notification" id="cartNotification"></div>
 
     <!-- Other scripts -->
+	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
@@ -446,15 +447,15 @@
                 window.open(waUrl, '_blank');
             }
 
-           $('.view-more').click(function (event) {
-    var productContainer = $(this).closest('.product');
-    var imageContainer = productContainer.find('.images-container');
-    var firstImageLink = imageContainer.find('a').first();
+         $('.view-more').click(function (event) {
+        event.preventDefault(); // Prevent default link behavior
+        var productContainer = $(this).closest('.product');
+        var additionalImageLink = productContainer.find('.images-container a:not(.main-image)').eq(0); // Get the first additional image link
 
-    // Simulate a click on the first image link
-    firstImageLink.click();
-});
-
+        if (additionalImageLink.length > 0) {
+            additionalImageLink[0].click(); // Simulate a click event on the first additional image link
+        }
+    });
 
             $(document).on('click', '.remove-from-cart-btn', function () {
                 var index = $(this).data('index');
