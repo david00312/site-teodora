@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ro">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MASCOTE PROFESIONALE</title>
+    <link rel="shortcut icon" href="images/mickey_mouse.png" type="image/png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/font-icon.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style>
+		/* Logo styling */
+.header-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Smaller logo on mobile */
+@media (max-width: 767px) {
+    .header-content img {
+        width: 200; /* Adjust the width as needed for mobile */
+    }
+}
+
+/* Larger logo on PC */
+@media (min-width: 768px) {
+    .header-content img {
+        width: 400px; /* Adjust the width as needed for PC */
+    }
+}
+
+        /* Your custom styles */
+          .shopping-list-container {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .shopping-cart-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .shopping-cart-item {
+        margin-bottom: 10px;
+    }
+
+    .shopping-cart-item button {
+        margin-left: 10px;
+    }
+
+        /* Lightbox2 arrow navigation */
+        .lb-prev,
+        .lb-next {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            line-height: 1;
+            padding: 8px;
+            border-radius: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+            display: none;
+            /* Hide arrows by default */
+        }
+
+        .lb-prev i,
+        .lb-next i {
+            font-size: 24px;
+        }
+
+        /* Lightbox2 close button */
+        .lb-close {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* Lightbox2 close button hover effect */
+        .lb-close:hover {
+            color: #ccc;
+        }
+
+        .view-more-btn {
+            background-color: #007bff;
+            /* Blue background */
+            border: none;
+            color: white;
+            /* White text */
+            padding: 12px 24px;
+            /* Some padding */
+            font-size: 16px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Pointer cursor */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+            /* Add a transition effect */
+        }
+
+        .view-more-btn:hover {
+            background-color: #0056b3;
+            /* Dark blue background on hover */
+        }
+
+        .checkout-overlay {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background-color: #16BE45;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .checkout-overlay:hover {
+            background-color: #14a240;
+        }
+
+        .total-price {
+            position: fixed;
+            bottom: 20px;
+            right: calc(20px + 200px);
+            /* Adjust position as needed */
+            z-index: 9998;
+            background-color: #16BE45;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: default;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .total-price-text {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #4CAF50;
+            /* Green background */
+            border: none;
+            color: white;
+            /* White text */
+            padding: 12px 24px;
+            /* Some padding */
+            font-size: 16px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Pointer cursor */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+            /* Add a transition effect */
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #45a049;
+            /* Dark green background on hover */
+        }
+
+        .remove-from-cart-btn {
+            background-color: #ff3333;
+            /* Red background */
+            border: none;
+            color: white;
+            /* White text */
+            padding: 6px 12px;
+            /* Some padding */
+            font-size: 14px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Pointer cursor */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+            /* Add a transition effect */
+        }
+
+        .remove-from-cart-btn:hover {
+            background-color: #cc0000;
+            /* Dark red background on hover */
+        }
+
+        /* Notification CSS */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(22, 190, 69, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            animation: slideIn 0.5s ease-out;
+            z-index: 9999;
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* New CSS for toggle container */
+        .toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+		.info-box {
+            background-color: #f7f7f7;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            color: #000;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="banner" role="banner">
+  <header id="header">
+    <div class="header-content clearfix"> <a class="logo" href="index.html"><img src="images/logo_black.png" alt="" width="397" height="97"></a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="contact-us.html">CONTACT</a></li>
+          <li><a href="about-us.html">DESPRE NOI</a></li>
+          <li><a href="recenzi.html">RECENZI</a></li>
+        </ul>
+      </nav>
+<a href="#" class="nav-toggle">Menu<span></span></a> </div>
+  </header>
+</section>
+
+    <section id="work-detail">">
+
+        <div class="container">
+            <hr>
+            <div class="row">
+                <div class="col-md-12 work-detail ">
+                    <div class="work-detail">
+												<!-- Product 22 -->
+<div class="product">
+    <div class="video-container">
+        <video autoplay loop muted playsinline class="main-video">
+            <source src="images/portfolio/WhatsApp Video 2024-03-24 at 18.26.59_b8bbe09d.mp4" type="video/mp4">
+            <!-- Add more source tags for different video formats if needed -->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+	<button class="add-to-cart-btn" data-item="ROBOT LED" data-price="6000">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;6000 LEI</span></button>
+
+
+                            
+    <!-- Add other product details and buttons -->
+</div>
+ <div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/IMG-20240311-WA0002.jpg" data-lightbox="IEPURE PASTI" data-title="IEPURE PASTI">
+            <img src="images/portfolio/IMG-20240311-WA0002.jpg" alt="" width="1144" height="1370" class="main-image img-responsive">
+        </a>
+        <a href="images/portfolio/IEPURE3.jpg" data-lightbox="IEPURE PASTI"></a>
+		<a href="images/portfolio/IEPURE4.jpg" data-lightbox="IEPURE PASTI"></a>
+		<a href="images/portfolio/IEPURE5.jpg" data-lightbox="IEPURE PASTI"></a>
+		<a href="images/portfolio/IEPURE6.jpg" data-lightbox="IEPURE PASTI"></a>
+		<a href="images/portfolio/IEPURE7.jpg" data-lightbox="IEPURE PASTI"></a>
+		
+</div>
+    <button class="add-to-cart-btn" data-item="IEPURE PASTI" data-price="3700">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3700 LEI</span></button>
+    <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+</div>
+
+<!-- Product 2 -->
+ <div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/PEPA PIG3.jpg" data-lightbox="PEPA PIG" data-title="PEPA PIG">
+            <img src="images/portfolio/PEPA PIG3.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/PEPA PIG1.jpg" data-lightbox="PEPA PIG"></a>
+		<a href="images/portfolio/PEPA PIG2.jpg" data-lightbox="PEPA PIG"></a>
+        <!-- Add more image links here -->
+    </div>
+    <button class="add-to-cart-btn" data-item="PEPA PIG" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+    <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+</div>
+
+                        <!-- Product 3 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/BABY REVEAL FATABAIAT1.jpg" data-lightbox="BABY REVEAL FATA/BAIAT" data-title="BABY REVEAL FATA/BAIAT">
+            <img src="images/portfolio/BABY REVEAL FATABAIAT1.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/BABY REVEAL FATABAIAT2.jpg" data-lightbox="BABY REVEAL FATA/BAIAT"></a>
+		<a href="images/portfolio/BABY REVEAL FATABAIAT3.jpg" data-lightbox="BABY REVEAL FATA/BAIAT"></a>
+		<a href="images/portfolio/BABY REVEAL FATABAIAT4.jpg" data-lightbox="BABY REVEAL FATA/BAIAT"></a>
+        <!-- Add more image links here -->
+    </div>
+	
+                            <button class="add-to-cart-btn" data-item="BABY REVEAL FATA/BAIAT" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+                        </div>
+						<!-- Product 4 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/PAPUSA LOL1.jpg" data-lightbox="PAPUSA LOL" data-title="PAPUSA LOL">
+            <img src="images/portfolio/PAPUSA LOL1.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/PAPUSA LOL2.jpg" data-lightbox="PAPUSA LOL"></a>
+		<a href="images/portfolio/PAPUSA LOL3.jpg" data-lightbox="PAPUSA LOL"></a>
+		<a href="images/portfolio/PAPUSA LOL4.jpg" data-lightbox="PAPUSA LOL"></a>
+		<a href="images/portfolio/PAPUSA LOL5.jpg" data-lightbox="PAPUSA LOL"></a>
+		<a href="images/portfolio/PAPUSA LOL6.jpg" data-lightbox="PAPUSA LOL"></a>
+		<a href="images/portfolio/PAPUSA LOL7.jpg" data-lightbox="PAPUSA LOL"></a>
+        <!-- Add more image links here -->
+		</div>
+	
+                            <button class="add-to-cart-btn" data-item="PAPUSA LOL" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+                        </div>
+						<!-- Product 5 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/SONIC1.jpg" data-lightbox="SONIC" data-title="SONIC">
+            <img src="images/portfolio/SONIC1.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/SONIC2.jpg" data-lightbox="SONIC"></a>
+		<a href="images/portfolio/SONIC3.jpg" data-lightbox="SONIC"></a>
+		<a href="images/portfolio/SONIC4.jpg" data-lightbox="SONIC"></a>
+		<a href="images/portfolio/SONIC5.jpg" data-lightbox="SONIC"></a>
+		<a href="images/portfolio/SONIC6.jpg" data-lightbox="SONIC"></a>
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="SONIC" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+												<!-- Product 6 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/UNICORN.jpg" data-lightbox="UNICORN" data-title="UNICORN">
+            <img src="images/portfolio/UNICORN.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/UNICORN1.jpg" data-lightbox="SONIC"></a>
+		<a href="images/portfolio/UNICORN2.jpg" data-lightbox="SONIC"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="UNICORN" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+																		<!-- Product 7 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/URS.jpg" data-lightbox="URS" data-title="URS">
+            <img src="images/portfolio/URS.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/URS1.jpg" data-lightbox="URS"></a>
+		<a href="images/portfolio/URS2.jpg" data-lightbox="URS"></a>
+		<a href="images/portfolio/URS3.jpg" data-lightbox="URS"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="URS" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+																						<!-- Product 8 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/PATRULA CATELUSILOR.jpg" data-lightbox="PATRULA CATELUSILOR" data-title="PATRULA CATELUSILOR">
+            <img src="images/portfolio/PATRULA CATELUSILOR.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/PATRULA CATELUSILOR1.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR2.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR3.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR4.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR5.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR6.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR7.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+		<a href="images/portfolio/PATRULA CATELUSILOR8.jpg" data-lightbox="PATRULA CATELUSILOR"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="PATRULA CATELUSILOR" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI/BUC </span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+																												<!-- Product 9-->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/MASHA.jpg" data-lightbox="MASHA" data-title="MASHA">
+            <img src="images/portfolio/MASHA.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/MASHA1.jpg" data-lightbox="MASHA"></a>
+		<a href="images/portfolio/MASHA2.jpg" data-lightbox="MASHA"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="MASHA" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+							<!-- Product 9 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/DINOSAURUS.jpg" data-lightbox="DINOSAURUS" data-title="DINOSAURUS">
+            <img src="images/portfolio/DINOSAURUS.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/DINOSAURUS1.jpg" data-lightbox="DINOSAURUS"></a>
+		<a href="images/portfolio/DINOSAURUS2.jpg" data-lightbox="DINOSAURUS"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="DINOSAURUS" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+						<!-- Product 10 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/TOM & JERRY.jpg" data-lightbox="TOM & JERRY" data-title="TOM & JERRY">
+            <img src="images/portfolio/TOM & JERRY.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/TOM & JERRY1.jpg" data-lightbox="TOM & JERRY"></a>
+		<a href="images/portfolio/TOM & JERRY2.jpg" data-lightbox="TOM & JERRY"></a>
+		<a href="images/portfolio/TOM & JERRY3.jpg" data-lightbox="TOM & JERRY"></a>
+		<a href="images/portfolio/TOM & JERRY4.jpg" data-lightbox="TOM & JERRY"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="TOM & JERRY" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI/BUC</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+												<!-- Product 11 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/DONALDDAISY.jpg" data-lightbox="DONALD/DAISY" data-title="DONALD/DAISY">
+            <img src="images/portfolio/DONALDDAISY.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/DONALDDAISY1.jpg" data-lightbox="DONALD/DAISY"></a>
+		<a href="images/portfolio/DONALDDAISY2.jpg" data-lightbox="DONALD/DAISY"></a>
+		<a href="images/portfolio/DONALDDAISY3.jpg" data-lightbox="DONALD/DAISY"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="DONALD/DAISY" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI/BUC</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+																		<!-- Product 12 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/STICK.jpg" data-lightbox="STICK" data-title="STICK">
+            <img src="images/portfolio/STICK.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/STICK1.jpg" data-lightbox="STICK"></a>
+		<a href="images/portfolio/STICK2.jpg" data-lightbox="STICK"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="STICK" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+								<!-- Product 13 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/OLAF.jpg" data-lightbox="OLAF" data-title="OLAF">
+            <img src="images/portfolio/OLAF.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/OLAF.jpg" data-lightbox="OLAF"></a>
+		<a href="images/portfolio/OLAF.jpg" data-lightbox="OLAF"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="OLAF" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+																								<!-- Product 14 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/BABY SHARK.jpg" data-lightbox="BABY SHARK" data-title="BABY SHARK">
+            <img src="images/portfolio/BABY SHARK.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/BABY SHARK1.jpg" data-lightbox="BABY SHARK"></a>
+		<a href="images/portfolio/BABY SHARK2.jpg" data-lightbox="BABY SHARK"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="BABY SHARK" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+                    </div>
+														<!-- Product 15 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/MICKEY MOUSEMINNIE DELUXE.jpg" data-lightbox="MICKEY MOUSE/MINNIE DELUXE" data-title="MICKEY MOUSE/MINNIE DELUXE">
+            <img src="images/portfolio/MICKEY MOUSEMINNIE DELUXE.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/MICKEY MOUSEMINNIE DELUXE1.jpg" data-lightbox="MICKEY MOUSE/MINNIE DELUXE"></a>
+		<a href="images/portfolio/MICKEY MOUSEMINNIE DELUXE2.jpg" data-lightbox="MICKEY MOUSE/MINNIE DELUXE"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="MICKEY MOUSE/MINNIE DELUXE" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3500 LEI/buc</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+</div>
+																														<!-- Product 17 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/ANAELSA.jpg" data-lightbox="ANA/ELSA" data-title="ANA/ELSA">
+            <img src="images/portfolio/ANAELSA.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/ANAELSA1.jpg" data-lightbox="ANA/ELSA"></a>
+		<a href="images/portfolio/ANAELSA2.jpg" data-lightbox="ANA/ELSA"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="ANA/ELSA" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI/BUC</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+                    </div>
+																													<!-- Product 18 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/MINNIEMICKEY CALITATE BUNA.jpg" data-lightbox="MINNIE/MICKEY CALITATE BUNA" data-title="MINNIE/MICKEY CALITATE BUNA">
+            <img src="images/portfolio/MINNIEMICKEY CALITATE BUNA.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/MINNIEMICKEY CALITATE BUNA1.jpg" data-lightbox="MINNIE/MICKEY CALITATE BUNA"></a>
+		<a href="images/portfolio/MINNIEMICKEY CALITATE BUNA2.jpg" data-lightbox="MINNIE/MICKEY CALITATE BUNA"></a>
+		<a href="images/portfolio/MINNIEMICKEY CALITATE BUNA3.jpg" data-lightbox="MINNIE/MICKEY CALITATE BUNA"></a>
+		<a href="images/portfolio/MINNIEMICKEY CALITATE BUNA4.jpg" data-lightbox="MINNIE/MICKEY CALITATE BUNA"></a>
+		<a href="images/portfolio/MINNIEMICKEY CALITATE BUNA5.jpg" data-lightbox="MINNIE/MICKEY CALITATE BUNA"></a>
+		
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="MINNIE/MICKEY CALITATE BUNA" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI/BUC</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+                    </div>
+																																				<!-- Product 19 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/PIJAMASK.jpg" data-lightbox="PIJAMASK" data-title="PIJAMASK">
+            <img src="images/portfolio/PIJAMASK.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/PIJAMASK1.jpg" data-lightbox="PIJAMASK"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="PIJAMASK" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI/BUC</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+                    </div>
+																																										<!-- Product 20 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/MARIO.jpg" data-lightbox="MARIO" data-title="MARIO">
+            <img src="images/portfolio/MARIO.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/MARIO1.jpg" data-lightbox="MARIO"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="MARIO" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+                    </div>
+																																															<!-- Product 21 -->
+<div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/HULK.jpg" data-lightbox="HULK" data-title="HULK">
+            <img src="images/portfolio/HULK.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/HULK1.jpg" data-lightbox="HULK"></a>
+
+        <!-- Add more image links here -->
+    </div>
+	   <button class="add-to-cart-btn" data-item="HULK" data-price="3200">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;3200 LEI</span></button>
+
+
+                            <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+    <!-- Add other product details and buttons -->
+                    </div>
+
+						
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"></footer>
+
+    <div class="shopping-list-container">
+    <p style="text-align: center; font-size: 20px;">COSUL MEU</p>
+    <ul class="shopping-cart-list" id="shoppingCartList">
+        <!-- Shopping cart items will be added here dynamically -->
+    </ul>
+</div>
+
+    <div class="checkout-overlay" id="checkoutBtn">COMANDA PE WHATSAPP</div>
+    <div class="total-price">
+        <span class="total-price-text">TOTALUL MEU:</span>
+        <span id="totalPrice">0 LEI</span>
+    </div>
+
+    <!-- Lightbox2 arrow navigation -->
+    <button class="lb-prev" id="prevBtn" style="left: 10px;"><i class="fa fa-chevron-left"></i></button>
+    <button class="lb-next" id="nextBtn" style="right: 10px;"><i class="fa fa-chevron-right"></i></button>
+
+    
+<!-- Notification -->
+    <div class="notification" id="cartNotification"></div>
+
+    <!-- Other scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+	 
+
+    <script>
+        $(document).ready(function () {
+			var shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+            var shoppingListContainer = $('.shopping-list-container');
+
+            function updateShoppingListContainer() {
+                if (shoppingCart.length > 0) {
+                    shoppingListContainer.show();
+                } else {
+                    shoppingListContainer.hide();
+                }
+            }
+
+            function updateShoppingCartList() {
+                var shoppingCartList = $('#shoppingCartList');
+                shoppingCartList.empty();
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    var item = shoppingCart[i];
+                    var listItem = $('<li class="shopping-cart-item">' + item.item + ' - ' + item.price + ' LEI<button class="remove-from-cart-btn" data-index="' + i + '">Șterge</button></li>');
+                    shoppingCartList.append(listItem);
+                }
+                updateShoppingListContainer();
+            }
+            var shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+            function updateTotalPrice() {
+                var totalPrice = 0;
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    totalPrice += shoppingCart[i].price;
+                }
+                $('#totalPrice').text(totalPrice + ' LEI');
+            }
+
+            function updateShoppingCartList() {
+                var shoppingCartList = $('#shoppingCartList');
+                shoppingCartList.empty();
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    var item = shoppingCart[i];
+                    var listItem = $('<li class="shopping-cart-item">' + item.item + ' - ' + item.price + ' LEI<button class="remove-from-cart-btn" data-index="' + i + '">Șterge</button></li>');
+                    shoppingCartList.append(listItem);
+                }
+            }
+
+            if (shoppingCart.length > 0) {
+                updateTotalPrice();
+                updateShoppingCartList();
+            }
+
+            $('.add-to-cart-btn').click(function () {
+                var item = $(this).data('item');
+                var price = parseFloat($(this).data('price'));
+                shoppingCart.push({ item: item, price: price });
+                showNotification(item + ' ADAUGAT IN COS');
+                updateTotalPrice();
+                updateShoppingCartList();
+                localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+            });
+
+            function showNotification(message) {
+                var notification = $('#cartNotification');
+                notification.text(message);
+                notification.fadeIn().delay(2000).fadeOut();
+            }
+
+            $('#checkoutBtn').click(function () {
+                if (shoppingCart.length > 0) {
+                    var totalPrice = 0;
+                    var message = "Produse în coș:\n";
+                    for (var i = 0; i < shoppingCart.length; i++) {
+                        message += (i + 1) + ". " + shoppingCart[i].item + " - " + shoppingCart[i].price + " LEI\n";
+                        totalPrice += shoppingCart[i].price;
+                    }
+                    message += "\nTOTALUL MEU: " + totalPrice + " LEI";
+                    sendWhatsAppMessage(message);
+                    shoppingCart = [];
+                    updateTotalPrice();
+                    updateShoppingCartList();
+                    localStorage.removeItem('shoppingCart');
+                    $('#totalPrice').text('0 LEI');
+                } else {
+                    alert('Coșul tău de cumpărături este gol.');
+                }
+            });
+
+            function sendWhatsAppMessage(message) {
+                var waNumber = '33620640572';
+                var waMessage = encodeURIComponent(message);
+                var waUrl = 'https://wa.me/' + waNumber + '?text=' + waMessage;
+                window.open(waUrl, '_blank');
+            }
+
+           $('.view-more').click(function (event) {
+    var productContainer = $(this).closest('.product');
+    var imageContainer = productContainer.find('.images-container');
+    var firstImageLink = imageContainer.find('a').first();
+
+    // Simulate a click on the first image link
+    firstImageLink.click();
+});
+
+
+            $(document).on('click', '.remove-from-cart-btn', function () {
+                var index = $(this).data('index');
+                shoppingCart.splice(index, 1);
+                updateTotalPrice();
+                updateShoppingCartList();
+                localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+            });
+
+            // Lightbox2 customizations
+            $(document).on('click', '[data-lightbox]', function (event) {
+                // Show arrows when lightbox is triggered
+                $('.lb-prev, .lb-next').show();
+            });
+
+            $(document).on('click', '.lb-close', function (event) {
+                // Hide arrows when lightbox is closed
+                $('.lb-prev, .lb-next').hide();
+            });
+        });
+    </script>
+		<!-- JS FILES --> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.fancybox.pack.js"></script> 
+<script src="js/retina.min.js"></script> 
+<script src="js/modernizr.js"></script> 
+<script src="js/main.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ro">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MASCOTE PROFESIONALE</title>
+    <link rel="shortcut icon" href="images/mickey_mouse.png" type="image/png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/font-icon.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style>
+		/* Logo styling */
+.header-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Smaller logo on mobile */
+@media (max-width: 767px) {
+    .header-content img {
+        width: 200; /* Adjust the width as needed for mobile */
+    }
+}
+
+/* Larger logo on PC */
+@media (min-width: 768px) {
+    .header-content img {
+        width: 400px; /* Adjust the width as needed for PC */
+    }
+}
+
+        /* Your custom styles */
+          .shopping-list-container {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .shopping-cart-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .shopping-cart-item {
+        margin-bottom: 10px;
+    }
+
+    .shopping-cart-item button {
+        margin-left: 10px;
+    }
+
+        /* Lightbox2 arrow navigation */
+        .lb-prev,
+        .lb-next {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            line-height: 1;
+            padding: 8px;
+            border-radius: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+            display: none;
+            /* Hide arrows by default */
+        }
+
+        .lb-prev i,
+        .lb-next i {
+            font-size: 24px;
+        }
+
+        /* Lightbox2 close button */
+        .lb-close {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        /* Lightbox2 close button hover effect */
+        .lb-close:hover {
+            color: #ccc;
+        }
+
+        .view-more-btn {
+            background-color: #007bff;
+            /* Blue background */
+            border: none;
+            color: white;
+            /* White text */
+            padding: 12px 24px;
+            /* Some padding */
+            font-size: 16px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Pointer cursor */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+            /* Add a transition effect */
+        }
+
+        .view-more-btn:hover {
+            background-color: #0056b3;
+            /* Dark blue background on hover */
+        }
+
+        .checkout-overlay {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background-color: #16BE45;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .checkout-overlay:hover {
+            background-color: #14a240;
+        }
+
+        .total-price {
+            position: fixed;
+            bottom: 20px;
+            right: calc(20px + 200px);
+            /* Adjust position as needed */
+            z-index: 9998;
+            background-color: #16BE45;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: default;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .total-price-text {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #4CAF50;
+            /* Green background */
+            border: none;
+            color: white;
+            /* White text */
+            padding: 12px 24px;
+            /* Some padding */
+            font-size: 16px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Pointer cursor */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+            /* Add a transition effect */
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #45a049;
+            /* Dark green background on hover */
+        }
+
+        .remove-from-cart-btn {
+            background-color: #ff3333;
+            /* Red background */
+            border: none;
+            color: white;
+            /* White text */
+            padding: 6px 12px;
+            /* Some padding */
+            font-size: 14px;
+            /* Set a font size */
+            cursor: pointer;
+            /* Pointer cursor */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s;
+            /* Add a transition effect */
+        }
+
+        .remove-from-cart-btn:hover {
+            background-color: #cc0000;
+            /* Dark red background on hover */
+        }
+
+        /* Notification CSS */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(22, 190, 69, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            animation: slideIn 0.5s ease-out;
+            z-index: 9999;
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* New CSS for toggle container */
+        .toggle-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+		.info-box {
+            background-color: #f7f7f7;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            color: #000;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="banner" role="banner">
+  <header id="header">
+    <div class="header-content clearfix"> <a class="logo" href="index.html"><img src="images/logo_black.png" alt="" width="397" height="97"></a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="contact-us.html">CONTACT</a></li>
+          <li><a href="about-us.html">DESPRE NOI</a></li>
+          <li><a href="recenzi.html">RECENZI</a></li>
+        </ul>
+      </nav>
+<a href="#" class="nav-toggle">Menu<span></span></a> </div>
+  </header>
+</section>
+
+    <section id="work-detail">">
+
+        <div class="container">
+            <hr>
+            <div class="row">
+                <div class="col-md-12 work-detail ">
+                    <div class="work-detail">
+											
+<!-- Product 1 -->
+ <div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/POZE MASCOTE/Alysa.jpg" data-lightbox="Alysa" data-title="Alysa">
+            <img src="images/portfolio/POZE MASCOTE/Alysa.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/POZE MASCOTE/Alysa1.jpg" data-lightbox="Alysa"></a>
+		<a href="images/portfolio/POZE MASCOTE/Alysa2.jpg" data-lightbox="Alysa"></a>
+		<a href="images/portfolio/POZE MASCOTE/Alysa3.jpg" data-lightbox="Alysa"></a>
+		<a href="images/portfolio/POZE MASCOTE/Alysa4.jpg" data-lightbox="Alysa"></a>
+        <!-- Add more image links here -->
+    </div>
+    <button class="add-to-cart-btn" data-item="Alysa" data-price="6000">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;6000 LEI</span></button>
+    <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+</div>
+<!-- Product 2 -->
+ <div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/POZE MASCOTE/Bibi.jpg" data-lightbox="Bibi" data-title="Bibi">
+            <img src="images/portfolio/POZE MASCOTE/Bibi.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/POZE MASCOTE/Bibi1.jpg" data-lightbox="Bibi"></a>
+		<a href="images/portfolio/POZE MASCOTE/Bibi2.jpg" data-lightbox="Bibi"></a>
+		<a href="images/portfolio/POZE MASCOTE/Bibi3.jpg" data-lightbox="Bibi"></a>
+		<a href="images/portfolio/POZE MASCOTE/Bibi4.jpg" data-lightbox="Bibi"></a>
+        <!-- Add more image links here -->
+    </div>
+    <button class="add-to-cart-btn" data-item="Bibi" data-price="6000">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;7000 LEI</span></button>
+    <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+</div>
+<!-- Product 3 -->
+ <div class="product">
+    <div class="images-container">
+        <a href="images/portfolio/POZE MASCOTE/Mircica.jpg" data-lightbox="Mircica" data-title="Mircica">
+            <img src="images/portfolio/POZE MASCOTE/Mircica.jpg" class="main-image img-responsive" alt="">
+        </a>
+        <a href="images/portfolio/POZE MASCOTE/Mircica1.jpg" data-lightbox="Mircica"></a>
+		<a href="images/portfolio/POZE MASCOTE/Mircica2.jpg" data-lightbox="Mircica"></a>
+		<a href="images/portfolio/POZE MASCOTE/Mircica3.jpg" data-lightbox="Mircica"></a>
+		<a href="images/portfolio/POZE MASCOTE/Mircica4.jpg" data-lightbox="Mircica"></a>
+        <!-- Add more image links here -->
+    </div>
+    <button class="add-to-cart-btn" data-item="Mircica" data-price="6000">ADAUGĂ ÎN COȘ<span class="item-price">&nbsp;7000 LEI</span></button>
+    <button class="view-more-btn view-more">VEZI MAI MULTE POZE</button>
+</div>
+				
+
+						
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer"></footer>
+
+    <div class="shopping-list-container">
+    <p style="text-align: center; font-size: 20px;">COSUL MEU</p>
+    <ul class="shopping-cart-list" id="shoppingCartList">
+        <!-- Shopping cart items will be added here dynamically -->
+    </ul>
+</div>
+
+    <div class="checkout-overlay" id="checkoutBtn">COMANDA PE WHATSAPP</div>
+    <div class="total-price">
+        <span class="total-price-text">TOTALUL MEU:</span>
+        <span id="totalPrice">0 LEI</span>
+    </div>
+
+    <!-- Lightbox2 arrow navigation -->
+    <button class="lb-prev" id="prevBtn" style="left: 10px;"><i class="fa fa-chevron-left"></i></button>
+    <button class="lb-next" id="nextBtn" style="right: 10px;"><i class="fa fa-chevron-right"></i></button>
+
+    
+<!-- Notification -->
+    <div class="notification" id="cartNotification"></div>
+
+    <!-- Other scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+	 
+
+    <script>
+        $(document).ready(function () {
+			var shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+            var shoppingListContainer = $('.shopping-list-container');
+
+            function updateShoppingListContainer() {
+                if (shoppingCart.length > 0) {
+                    shoppingListContainer.show();
+                } else {
+                    shoppingListContainer.hide();
+                }
+            }
+
+            function updateShoppingCartList() {
+                var shoppingCartList = $('#shoppingCartList');
+                shoppingCartList.empty();
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    var item = shoppingCart[i];
+                    var listItem = $('<li class="shopping-cart-item">' + item.item + ' - ' + item.price + ' LEI<button class="remove-from-cart-btn" data-index="' + i + '">Șterge</button></li>');
+                    shoppingCartList.append(listItem);
+                }
+                updateShoppingListContainer();
+            }
+            var shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+            function updateTotalPrice() {
+                var totalPrice = 0;
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    totalPrice += shoppingCart[i].price;
+                }
+                $('#totalPrice').text(totalPrice + ' LEI');
+            }
+
+            function updateShoppingCartList() {
+                var shoppingCartList = $('#shoppingCartList');
+                shoppingCartList.empty();
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    var item = shoppingCart[i];
+                    var listItem = $('<li class="shopping-cart-item">' + item.item + ' - ' + item.price + ' LEI<button class="remove-from-cart-btn" data-index="' + i + '">Șterge</button></li>');
+                    shoppingCartList.append(listItem);
+                }
+            }
+
+            if (shoppingCart.length > 0) {
+                updateTotalPrice();
+                updateShoppingCartList();
+            }
+
+            $('.add-to-cart-btn').click(function () {
+                var item = $(this).data('item');
+                var price = parseFloat($(this).data('price'));
+                shoppingCart.push({ item: item, price: price });
+                showNotification(item + ' ADAUGAT IN COS');
+                updateTotalPrice();
+                updateShoppingCartList();
+                localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+            });
+
+            function showNotification(message) {
+                var notification = $('#cartNotification');
+                notification.text(message);
+                notification.fadeIn().delay(2000).fadeOut();
+            }
+
+            $('#checkoutBtn').click(function () {
+                if (shoppingCart.length > 0) {
+                    var totalPrice = 0;
+                    var message = "Produse în coș:\n";
+                    for (var i = 0; i < shoppingCart.length; i++) {
+                        message += (i + 1) + ". " + shoppingCart[i].item + " - " + shoppingCart[i].price + " LEI\n";
+                        totalPrice += shoppingCart[i].price;
+                    }
+                    message += "\nTOTALUL MEU: " + totalPrice + " LEI";
+                    sendWhatsAppMessage(message);
+                    shoppingCart = [];
+                    updateTotalPrice();
+                    updateShoppingCartList();
+                    localStorage.removeItem('shoppingCart');
+                    $('#totalPrice').text('0 LEI');
+                } else {
+                    alert('Coșul tău de cumpărături este gol.');
+                }
+            });
+
+            function sendWhatsAppMessage(message) {
+                var waNumber = '33620640572';
+                var waMessage = encodeURIComponent(message);
+                var waUrl = 'https://wa.me/' + waNumber + '?text=' + waMessage;
+                window.open(waUrl, '_blank');
+            }
+
+           $('.view-more').click(function (event) {
+    var productContainer = $(this).closest('.product');
+    var imageContainer = productContainer.find('.images-container');
+    var firstImageLink = imageContainer.find('a').first();
+
+    // Simulate a click on the first image link
+    firstImageLink.click();
+});
+
+
+            $(document).on('click', '.remove-from-cart-btn', function () {
+                var index = $(this).data('index');
+                shoppingCart.splice(index, 1);
+                updateTotalPrice();
+                updateShoppingCartList();
+                localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+            });
+
+            // Lightbox2 customizations
+            $(document).on('click', '[data-lightbox]', function (event) {
+                // Show arrows when lightbox is triggered
+                $('.lb-prev, .lb-next').show();
+            });
+
+            $(document).on('click', '.lb-close', function (event) {
+                // Hide arrows when lightbox is closed
+                $('.lb-prev, .lb-next').hide();
+            });
+        });
+    </script>
+		<!-- JS FILES --> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.fancybox.pack.js"></script> 
+<script src="js/retina.min.js"></script> 
+<script src="js/modernizr.js"></script> 
+<script src="js/main.js"></script>
+
+
+</body>
+
+</html>

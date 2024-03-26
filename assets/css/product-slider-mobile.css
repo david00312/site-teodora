@@ -1,0 +1,7 @@
+/* For mobile devices */
+@media (max-width: 767px) {
+    .swiper-slide {
+        width: 100% !important; /* Set width of each product to 100% */
+        margin-right: 0 !important; /* Remove right margin */
+    }
+}
